@@ -22,6 +22,15 @@ const k = kaplay({
         left: {
             keyboard: ["a", "left"],
         },
+        play: {
+            keyboard: ["space"],
+        },
+        shoot: {
+            keyboard: ["x"],
+        },
+        slash: {
+            keyboard: ["c"],
+        },
     },
     debugKey: "p",
     debug: true,

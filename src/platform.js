@@ -1,6 +1,6 @@
 import { scale } from "./constants";
 
-export async function makePlatform(k) {
+export default async function makePlatform(k) {
     const platformData = await (await fetch(`./sprites/battleground.json`)).json();
 
     const platform = k.add([k.sprite("battleground"), k.scale(scale), k.pos(0)])

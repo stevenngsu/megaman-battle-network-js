@@ -1,12 +1,7 @@
-import { scale } from "./constants";
-import k from "./kaplayCtx";
-import { makePlatform } from "./platform";
-import makePlayer from "./entities/player";
+import k from "../kaplayCtx";
+import { scale } from "../constants";
 
-export default async function mainMenu() {
-    if (!k.getData("best-score")) k.setData("best-score", 0);
-    k.onButtonPress(" ", () => k.go("game"));
-
+export default function gameContent() {
     const bgPieceWidth = 128;
     const bgPieceHeight = 64;
     const bgPieces = [
@@ -44,45 +39,4 @@ export default async function mainMenu() {
         k.add([k.sprite("ACDCbg", { anim: "flicker" }), k.pos(bgPieceWidth * scale, bgPieceHeight * scale * 2), k.scale(scale), k.opacity(0.8),]),
 
     ];
-
-    const platform = makePlatform(k).then(platformData => {
-        makePlayer(
-            k,
-            platformData.spawnPoints["2x-2y"][0].x / 4,
-            platformData.spawnPoints["2x-2y"][0].y / 4,
-            platformData,
-        )
-    });
-
-    console.log(platform);
-
-    // const player = makePlayer(
-    //     k,
-    //     spawnPoints["2x-2y"][0].x / scale,
-    //     spawnPoints["2x-2y"][0].y / scale,
-    // )
-    // Moving Background
-    // k.onUpdate(() => {
-        // for (num in bgPieces) {
-        //     console.log(worldPos(bgPieces[num]))
-            // if (bgPieces[num].pos.x >= bgPieces[num].pos.x + bgPieceWidth) { 
-                // if (num % 4 === 0) {
-                //     bgPieces[num].moveTo(-bgPieceWidth * scale * 2, -bgPieceHeight * scale);
-                //     console.log(moveCount)
-                //     moveCount ++;
-                //     console.log(moveCount)
-                // }
-                // if (num % 4 === 1) {
-                //     bgPieces[num].moveTo(-bgPieceWidth * scale, -bgPieceHeight * scale);
-                // }
-                // if (num % 4 === 2) {
-                //     bgPieces[num].moveTo(0, -bgPieceHeight * scale);
-                // }
-                // if (num % 4 === 3) {
-                //     bgPieces[num].moveTo(bgPieceWidth * scale, -bgPieceHeight * scale);
-                // }
-            // }
-            // bgPieces[num].move(100, 100)
-        // }
-    // });
 }
