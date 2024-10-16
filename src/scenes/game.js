@@ -13,35 +13,7 @@ export default function game() {
         k.loop(1, () => {
             gameSpeed += 20;
         })
-
-        const spawnArmadillo = () => {
-            let num = Math.floor(Math.random() * 3) + 1
-            const armadillo = makeArmadillo(
-                k,
-                100,
-                platformData.spawnPoints[`6x-${num}y`][0].x / scale,
-                platformData.spawnPoints[`6x-${num}y`][0].y / scale,
-                platformData.spawnPoints
-            )
-    
-            armadillo.onUpdate(() => {
-                if (gameSpeed < 1000) {
-                    armadillo.move(-(gameSpeed + gameSpeed), 0)
-                    return;
-                }
-    
-                armadillo.move(-gameSpeed, 0);
-            })
-    
-            armadillo.onExitScreen(() => {
-                if (armadillo.pos.x < 0) k.destroy(armadillo);
-            })
-
-            const waitTime = k.rand(1, 3);
-            k.wait(waitTime, spawnArmadillo);    
-        }
-        spawnArmadillo();
-        
+                
         const megaman = makePlayer(
             k,
             1000,
@@ -50,23 +22,35 @@ export default function game() {
             platformData.spawnPoints,
         )
 
-        const armadillo = makeArmadillo(
-            k,
-            100,
-            platformData.spawnPoints[`5x-2y`][0].x / scale,
-            platformData.spawnPoints[`5x-2y`][0].y / scale,
-            platformData.spawnPoints
-        )  
+        for (let i = 0; i < 2; i++) {
 
+            const spawnArmadillo = () => {
+                let num = Math.floor(Math.random() * 3) + 1
+                const armadillo = makeArmadillo(
+                    k,
+                    100,
+                    platformData.spawnPoints[`6x-${num}y`][0].x / scale,
+                    platformData.spawnPoints[`6x-${num}y`][0].y / scale,
+                    platformData.spawnPoints
+                )
         
-        // megaman.onCollide("enemy", (enemy) => {
-            
-        // })
-
-
-    //         const waitTime = k.rand(0.5, 2.5);
-    //         k.wait(waitTime, spawnArmadillo);
-    //     }
-    // spawnArmadillo();
+                armadillo.onUpdate(() => {
+                    if (gameSpeed < 1000) {
+                        armadillo.move(-(gameSpeed + gameSpeed), 0)
+                        return;
+                    }
+        
+                    armadillo.move(-gameSpeed, 0);
+                })
+        
+                armadillo.onExitScreen(() => {
+                    if (armadillo.pos.x < 0) k.destroy(armadillo);
+                })
+    
+                const waitTime = k.rand(1, 3);
+                k.wait(waitTime, spawnArmadillo);    
+            }
+            spawnArmadillo();
+        }
     });
 } 

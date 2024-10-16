@@ -52,10 +52,10 @@ export default function setControls( k, spawnpoints, player) {
                     break;
                 };
                 break;
-            case "x":
+            case "j":
                 player.enterState("shootState");
                 break;
-            case "c":
+            case "k":
                 player.enterState("slashState");
                 break;
            }

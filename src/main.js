@@ -15,9 +15,10 @@ k.loadSprite("megaman", "sprites/player/MMspritesheet.png", {
 	sliceY: 24,
 	anims: {
 		idle: 0,
-		shoot: { from: 63, to: 67, speed: 60 },
+		hurt: { from: 1, to: 8, speed: 30 },
+		delete: 1,
 		move: { from: 10, to: 16, speed: 60 },
-		hit: { from: 1, to: 8, speed: 30 },
+		shoot: { from: 63, to: 67, speed: 60 },
 		slash: { from: 30, to: 33, speed: 15 },
 	}
 });

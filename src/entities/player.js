@@ -9,12 +9,21 @@ export default async function makePlayer(k, health, posX, posY, spawnpoints) {
         k.anchor("bot"),
         k.pos(posX * scale, posY * scale),
         k.health(health),
-        k.state("idleState", ["idleState", "moveState", "shootState", "slashState"]),        
-        "megaman",
+        k.state("idleState", ["idleState", "hurtState", "moveState", "shootState", "slashState"]),        
+        {
+            enemiesDefeatedUI: null,
+        },
+            "megaman",
     ])
 
     megaman.onStateEnter("idleState", () => {
-        megaman.play("idle")
+        megaman.play("idle");
+    })
+
+    megaman.onStateEnter("hurtState", () => {
+        megaman.play("hurt", {
+            onEnd: () => megaman.enterState("idleState"),
+        })
     })
 
     megaman.onStateEnter("moveState", () => {
@@ -28,11 +37,30 @@ export default async function makePlayer(k, health, posX, posY, spawnpoints) {
             onEnd: () => megaman.enterState("idleState"),
         })
     })
+
     megaman.onStateEnter("slashState", () => {
         megaman.play("slash", {
             onEnd: () => megaman.enterState("idleState"),
         })
     })
 
+    megaman.onCollide("enemy", (enemy) => {
+        megaman.enterState("hurtState");
+        megaman.hurt(100);
+        megaman.onDeath(() => {
+            megaman.play("delete");
+            k.go("gameover");
+        })
+    })
+    
+    megaman.enemiesDefeatedUI = megaman.add([
+        k.text("", { font: "font", size: 12 }),
+        k.color(255, 255, 0),
+        k.anchor("center"),
+        k.pos(30, -10),
+    ])
+
     setControls(k, spawnpoints, megaman)
+
+    return megaman;
 }
