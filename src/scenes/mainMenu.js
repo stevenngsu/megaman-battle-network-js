@@ -21,7 +21,7 @@ export default async function mainMenu() {
     });
 
     k.add([
-        k.text("Megaman.EXE Virus Horde", { font: "font", size: 24}),
+        k.text("Megaman.EXE Endless Armadillos", { font: "font", size: 24}),
         k.anchor("center"),
         k.pos(k.center().x, 100),
     ])
@@ -30,35 +30,4 @@ export default async function mainMenu() {
         k.anchor("center"),
         k.pos(k.center().x, 150),
     ])
-
-
-    // const player = makePlayer(
-    //     k,
-    //     spawnPoints["2x-2y"][0].x / scale,
-    //     spawnPoints["2x-2y"][0].y / scale,
-    // )
-    // Moving Background
-    // k.onUpdate(() => {
-        // for (num in bgPieces) {
-        //     console.log(worldPos(bgPieces[num]))
-            // if (bgPieces[num].pos.x >= bgPieces[num].pos.x + bgPieceWidth) { 
-                // if (num % 4 === 0) {
-                //     bgPieces[num].moveTo(-bgPieceWidth * scale * 2, -bgPieceHeight * scale);
-                //     console.log(moveCount)
-                //     moveCount ++;
-                //     console.log(moveCount)
-                // }
-                // if (num % 4 === 1) {
-                //     bgPieces[num].moveTo(-bgPieceWidth * scale, -bgPieceHeight * scale);
-                // }
-                // if (num % 4 === 2) {
-                //     bgPieces[num].moveTo(0, -bgPieceHeight * scale);
-                // }
-                // if (num % 4 === 3) {
-                //     bgPieces[num].moveTo(bgPieceWidth * scale, -bgPieceHeight * scale);
-                // }
-            // }
-            // bgPieces[num].move(100, 100)
-        // }
-    // });
 }

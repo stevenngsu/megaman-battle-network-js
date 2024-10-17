@@ -6,7 +6,8 @@ export default function setControls( k, spawnpoints, player) {
         y: 2,
     }
 
-    k.onKeyPress((key) => {
+    k.onKeyDown((key) => {
+        if (player.state !== "idleState") return;
         switch (key) {
             case "a":
                 if (grid.x > 1) {
@@ -52,14 +53,28 @@ export default function setControls( k, spawnpoints, player) {
                     break;
                 };
                 break;
-            case "j":
-                player.enterState("shootState");
-                break;
-            case "k":
-                player.enterState("slashState");
-                break;
            }
     })
-    
+
+    let action = true;
+    k.onKeyPress((key) => {
+        if (action !== true) return;
+        switch (key) {
+            case "j":
+            player.enterState("shootState");
+            action = false;
+            setTimeout(() => {
+                action = true;
+            }, "100");
+            break;
+        case "k":
+            player.enterState("slashState");
+            action = false;
+            setTimeout(() => {
+                action = true;
+            }, "1000");
+            break;
+        }          
+    })
     player.enterState("idleState");
 }

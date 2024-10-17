@@ -1,4 +1,4 @@
-import { scale } from "../constants";
+import { scale, tileWidth, tileHeight } from "../constants";
 import setControls from "./setControls";
 
 export default async function makePlayer(k, health, posX, posY, spawnpoints) {
@@ -36,12 +36,43 @@ export default async function makePlayer(k, health, posX, posY, spawnpoints) {
         megaman.play("shoot", {
             onEnd: () => megaman.enterState("idleState"),
         })
+
+        const bullet = k.add([
+            k.pos(megaman.pos),
+            k.move(360, 3000),
+            k.rect(0, 0),
+            k.area(),
+            k.offscreen({ destroy: true }),
+            "bullet",
+        ])
+        
+        bullet.onCollide("enemy", (enemy) => {
+            k.destroy(enemy);
+            k.destroy(bullet);
+        })
     })
 
     megaman.onStateEnter("slashState", () => {
         megaman.play("slash", {
             onEnd: () => megaman.enterState("idleState"),
         })
+
+        const sword = k.add([
+            k.pos(megaman.pos.x + 80, megaman.pos.y - 170),
+            k.move(360, 0),
+            k.rect(0,0),
+            k.scale(scale),
+            k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 75) }),
+            "sword",
+        ])
+        
+        sword.onCollide("enemy", (enemy) => {
+            k.destroy(enemy);
+        })
+        
+        k.wait(0.25, () => {
+            k.destroy(sword);
+       })
     })
 
     megaman.onCollide("enemy", (enemy) => {
