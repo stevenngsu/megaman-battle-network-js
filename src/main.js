@@ -1,7 +1,11 @@
 import k from "./kaplayCtx";
-import { scale } from "./constants";
 import mainMenu from "./scenes/mainMenu";
 import game from "./scenes/game";
+import gameOver from "./scenes/gameOver";
+
+k.loadFont("font", "sprites/fonts/Mega-Man-Battle-Network.ttf");
+
+k.loadSprite("battleground", "sprites/battleground.png");
 
 k.loadSprite("ACDCbg", "sprites/backgrounds/ACDCbg.png", {
 	sliceX: 2,
@@ -22,6 +26,7 @@ k.loadSprite("megaman", "sprites/player/MMspritesheet.png", {
 		slash: { from: 30, to: 33, speed: 15 },
 	}
 });
+
 k.loadSprite("armadillo", "sprites/enemies/armadillo.png", {
 	sliceX: 5,
 	sliceY: 4,
@@ -29,81 +34,17 @@ k.loadSprite("armadillo", "sprites/enemies/armadillo.png", {
 		idle: { from: 0, to: 3, loop: true},
 		attack: { from: 5, to: 9 },
 	}
-})
-k.loadFont("font", "sprites/fonts/Mega-Man-Battle-Network.ttf")
-k.loadSprite("battleground", "sprites/battleground.png")
-k.loadSpriteAtlas("sprites/battleUI/CrossScreen.png", {
-	"cardSelectScreen": {
-		x: 104,
-		y: 6,
-		width: 120,
-		height: 160,
-	},
-})
-k.loadSpriteAtlas("sprites/battleUI/misc.png", {
-	"customBar": {
-		x: 255,
-		y: 63,
-		width: 144,
-		height: 15,
-	},
-	"fullCustom": {
-		x: 255,
-		y: 87,
-		width: 144,
-		height: 72,
-		sliceY: 4,
-		anims: {
-			full: { from: 0, to: 3 },
-		}
-	},
-	"hp": {
-		x: 127,
-		y: 173,
-		width: 44,
-		height: 18,
-	},
-})
-k.loadSpriteAtlas("sprites/battleUI/portraits.png", {
-	"MMportrait": {
-		x: 0,
-		y: 0,
-		width: 35,
-		height: 140,
-		sliceY: 7,
-		anims: {
-			neutral: 0,
-			counter: 1,
-		}
-	},
-	"portraitNum" : {
-		x: 22,
-		y: 242,
-		width: 176,
-		height: 16,
-		sliceX: 11,
-		anims: {
-			0: 0,
-			1: 1,
-			2: 2,
-			3: 3,
-			4: 4,
-			5: 5,
-			5: 6,
-			7: 7,
-			8: 8,
-			9: 9,
-			"none": 10,
-		}
+});
+
+k.loadSprite("orderPoint", "sprites/battleUI/orderPoints.png", {
+	sliceX: 3,
+	anims: {
+		flicker: { from: 0, to: 2, loop: true},
 	}
-})
+});
 
 k.scene("main-menu", mainMenu);
-
 k.scene("game", game);
-
-k.scene("gameover", () => {
-
-})
+k.scene("gameover", gameOver);
 
 k.go("main-menu");

@@ -1,6 +1,6 @@
 import { scale } from "../constants";
 
-export function makeArmadillo(k, health, posX, posY, spawnpoints) {
+export default function makeArmadillo(k, health, posX, posY, spawnpoints) {
     const armadillo = k.add([
         k.sprite("armadillo", {
             flipX: true,
@@ -16,12 +16,26 @@ export function makeArmadillo(k, health, posX, posY, spawnpoints) {
         k.health(health),
         k.z(0.1),
         k.offscreen(),
+        {
+            hpUI: health,
+        },
         "enemy",  
     ])
 
     armadillo.onStateEnter("patrolState", () => {
         armadillo.play("idle");
-    })
+    });
+
+    armadillo.hpUI = armadillo.add([
+        k.text(`${health}`, { font: "font", size: 4 }),
+        k.color(255, 255, 255),
+        k.anchor("center"),
+        k.pos(0, 1),
+    ])
+
+    armadillo.onDeath(() => {
+        k.destroy(armadillo);
+    });
 
     return armadillo;
 }

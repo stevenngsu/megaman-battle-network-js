@@ -72,7 +72,7 @@ export default function setControls( k, spawnpoints, player) {
             action = false;
             setTimeout(() => {
                 action = true;
-            }, "1000");
+            }, "500");
             break;
         }          
     })

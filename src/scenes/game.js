@@ -3,13 +3,14 @@ import { scale } from "../constants";
 import gameContent from "./gameContent";
 import makePlatform from "../platform";
 import makePlayer from "../entities/player";
-import { makeArmadillo } from "../entities/armadillo";
+import makeArmadillo from "../entities/armadillo";
+import makePoint from "../entities/point";
 
 export default function game() {
     gameContent();
     
     const platform = makePlatform(k).then(platformData => {
-        let gameSpeed = 200;
+        let gameSpeed = 100;
         k.loop(1, () => {
             gameSpeed += 20;
         })
@@ -22,10 +23,12 @@ export default function game() {
             platformData.spawnPoints,
         )
 
-        for (let i = 0; i < 2; i++) {
+        const armadilloSpawns = 1;
+        for (let i = 0; i < armadilloSpawns; i++) {
 
             const spawnArmadillo = () => {
                 let num = Math.floor(Math.random() * 3) + 1
+                
                 const armadillo = makeArmadillo(
                     k,
                     100,
@@ -52,5 +55,23 @@ export default function game() {
             }
             spawnArmadillo();
         }
+
+        const spawnOrderPoint = () => {
+            let x1 = Math.floor(Math.random() * 3) + 1
+            let x2 = Math.floor(Math.random() * 3) + 1
+            let y1 = Math.floor(Math.random() * 3) + 1
+            let y2 = Math.floor(Math.random() * 3) + 1
+            
+            const orderPoint = makePoint(
+                k,
+                platformData.spawnPoints[`${x1}x-${y1}y`][0].x / scale,
+                platformData.spawnPoints[`${x2}x-${y2}y`][0].y / scale,
+                platformData.spawnPoints,
+            )
+
+            const waitTime = 3;
+            k.wait(waitTime, spawnOrderPoint);
+        }
+        spawnOrderPoint();
     });
 } 
