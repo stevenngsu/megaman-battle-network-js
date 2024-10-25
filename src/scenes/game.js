@@ -1,5 +1,5 @@
 import k from "../kaplayCtx";
-import { scale } from "../constants";
+import { scale, screenWidth } from "../constants";
 import gameContent from "./gameContent";
 import makePlatform from "../platform";
 import makePlayer from "../entities/player";
@@ -14,47 +14,51 @@ export default function game() {
         k.loop(1, () => {
             gameSpeed += 20;
         })
-                
-        const megaman = makePlayer(
-            k,
-            1000,
-            platformData.spawnPoints["2x-2y"][0].x / scale,
-            platformData.spawnPoints["2x-2y"][0].y / scale,
-            platformData.spawnPoints,
-        )
 
-        const armadilloSpawns = 1;
-        for (let i = 0; i < armadilloSpawns; i++) {
+        let playerHealth = 100;
+        let enemyHealth = 100;
 
-            const spawnArmadillo = () => {
-                let num = Math.floor(Math.random() * 3) + 1
-                
-                const armadillo = makeArmadillo(
-                    k,
-                    100,
-                    platformData.spawnPoints[`6x-${num}y`][0].x / scale,
-                    platformData.spawnPoints[`6x-${num}y`][0].y / scale,
-                    platformData.spawnPoints
-                )
-        
-                armadillo.onUpdate(() => {
-                    if (gameSpeed < 1000) {
-                        armadillo.move(-(gameSpeed + gameSpeed), 0)
-                        return;
-                    }
-        
-                    armadillo.move(-gameSpeed, 0);
-                })
-        
-                armadillo.onExitScreen(() => {
-                    if (armadillo.pos.x < 0) k.destroy(armadillo);
-                })
+        // gathering points
+        let score = 0;
+        let scoreMultiplier = 1;
+        const scoreText = k.add([
+            k.text("SCORE: 0", { font: "font", size: 36 }),
+            k.pos(screenWidth - 300, 10),
+        ]);
+
+        const spawnArmadillo = () => {
+            let num = Math.floor(Math.random() * 3) + 1
+            
+            const armadillo = makeArmadillo(
+                k,
+                enemyHealth,
+                platformData.spawnPoints[`6x-${num}y`][0].x / scale,
+                platformData.spawnPoints[`6x-${num}y`][0].y / scale,
+                platformData.spawnPoints
+            )
     
-                const waitTime = k.rand(1, 3);
-                k.wait(waitTime, spawnArmadillo);    
-            }
-            spawnArmadillo();
+            armadillo.onUpdate(() => {
+                if (gameSpeed < 1000) {
+                    armadillo.move(-(gameSpeed + gameSpeed), 0)
+                    return;
+                }
+    
+                armadillo.move(-gameSpeed, 0);
+            })
+    
+            armadillo.onExitScreen(() => {
+                if (armadillo.pos.x < 0) k.destroy(armadillo);
+            })
+
+            armadillo.onDeath(() => {
+                score += 1;
+                scoreText.text = `SCORE: ${score}`;
+            })
+
+            const waitTime = k.rand(1, 3);
+            k.wait(waitTime, spawnArmadillo);    
         }
+        spawnArmadillo();
 
         const spawnOrderPoint = () => {
             let x1 = Math.floor(Math.random() * 3) + 1
@@ -69,9 +73,29 @@ export default function game() {
                 platformData.spawnPoints,
             )
 
+            orderPoint.onDestroy(() => {
+                score += 5;
+                scoreText.text = `SCORE: ${score}`;
+            })
+
             const waitTime = 3;
             k.wait(waitTime, spawnOrderPoint);
         }
         spawnOrderPoint();
+        
+        const spawnMegaman = () => {
+            const megaman = makePlayer(
+                k,
+                playerHealth,
+                platformData.spawnPoints["2x-2y"][0].x / scale,
+                platformData.spawnPoints["2x-2y"][0].y / scale,
+                platformData.spawnPoints,
+            )
+            
+            megaman.onDeath(() => {
+                k.setData("currentScore", score);
+            });
+        }
+        spawnMegaman();
     });
 } 

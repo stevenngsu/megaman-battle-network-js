@@ -3,7 +3,7 @@ import mainMenu from "./scenes/mainMenu";
 import game from "./scenes/game";
 import gameOver from "./scenes/gameOver";
 
-k.loadFont("font", "sprites/fonts/Mega-Man-Battle-Network.ttf");
+k.loadFont("font", "sprites/fonts/BN6FontBold.ttf");
 
 k.loadSprite("battleground", "sprites/battleground.png");
 
@@ -20,10 +20,21 @@ k.loadSprite("megaman", "sprites/player/MMspritesheet.png", {
 	anims: {
 		idle: 0,
 		hurt: { from: 1, to: 8, speed: 30 },
-		delete: 1,
 		move: { from: 10, to: 16, speed: 60 },
 		shoot: { from: 63, to: 67, speed: 60 },
-		slash: { from: 30, to: 33, speed: 15 },
+		slash: { from: 30, to: 35, speed: 30 },
+	}
+});
+k.loadSprite("buster", "sprites/player/arms/buster.png", {
+	sliceX: 4,
+	anims: {
+		shoot: { from: 0, to: 3, speed: 60 },
+	}
+});
+k.loadSprite("sword", "sprites/player/arms/sword.png", {
+	sliceX: 6,
+	anims: {
+		slash: { from: 0, to: 5, speed: 30 },
 	}
 });
 

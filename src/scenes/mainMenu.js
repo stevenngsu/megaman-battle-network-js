@@ -4,7 +4,7 @@ import gameContent from "./gameContent";
 import makePlatform from "../platform";
 import makePlayer from "../entities/player";
 
-export default async function mainMenu() {
+export default function mainMenu() {
     if (!k.getData("best-score")) k.setData("best-score", 0);
     k.onButtonPress("play", () => k.go("game"));
 
@@ -21,13 +21,13 @@ export default async function mainMenu() {
     });
 
     k.add([
-        k.text("Megaman.EXE Endless Armadillos", { font: "font", size: 24}),
+        k.text("Megaman.EXE Endless Armadillos", { font: "font", size: 48}),
         k.anchor("center"),
         k.pos(k.center().x, 100),
     ])
     k.add([
-        k.text("Press Space/Click/Touch to Play", { font: "font", size: 14}),
+        k.text("Press Space to Play", { font: "font", size: 36}),
         k.anchor("center"),
-        k.pos(k.center().x, 150),
+        k.pos(k.center().x, 200),
     ])
 }

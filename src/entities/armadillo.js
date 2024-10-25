@@ -14,7 +14,6 @@ export default function makeArmadillo(k, health, posX, posY, spawnpoints) {
         k.pos(posX * scale, posY * scale),
         k.scale(scale),
         k.health(health),
-        k.z(0.1),
         k.offscreen(),
         {
             hpUI: health,
@@ -27,11 +26,21 @@ export default function makeArmadillo(k, health, posX, posY, spawnpoints) {
     });
 
     armadillo.hpUI = armadillo.add([
-        k.text(`${health}`, { font: "font", size: 4 }),
+        k.text(armadillo.hp(), { font: "font", size: 8 }),
         k.color(255, 255, 255),
         k.anchor("center"),
         k.pos(0, 1),
     ])
+
+    armadillo.onHurt(() => {
+        k.destroy(armadillo.hpUI);
+        armadillo.hpUI = armadillo.add([
+            k.text(armadillo.hp(), { font: "font", size: 8 }),
+            k.color(255, 255, 255),
+            k.anchor("center"),
+            k.pos(0, 1),
+        ])
+    })
 
     armadillo.onDeath(() => {
         k.destroy(armadillo);

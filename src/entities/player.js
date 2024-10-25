@@ -1,7 +1,7 @@
-import { scale, tileWidth, tileHeight } from "../constants";
+import { scale } from "../constants";
 import setControls from "./setControls";
 
-export default async function makePlayer(k, health, posX, posY, spawnpoints) {
+export default function makePlayer(k, health, posX, posY, spawnpoints) {
     const megaman = k.add([
         k.sprite("megaman", {anim: "idle"}),
         k.scale(scale),
@@ -28,37 +28,32 @@ export default async function makePlayer(k, health, posX, posY, spawnpoints) {
         })
     })
     
-    // collisions
+    megaman.onDeath(() => {
+        k.go("gameover");
+    })
+    
     megaman.onCollide("enemy", (enemy) => {
         megaman.enterState("hurtState");
-        megaman.hurt(100);
-        megaman.onDeath(() => {
-            // megaman.play("delete");
-            k.go("gameover");
-        })
+        megaman.hurt(20);
     })
-
-    // gathering points
-    let score = 0;
-    let scoreMultiplier = 0;
-
-    const scoreText = k.add([
-        k.text("Score: 0", { font: "font", size: 18 }),
-        k.pos(20, 20),
-    ]);
 
     megaman.onCollide("orderPoint", (point) => {
         // k.play("collect");
         k.destroy(point);
-        score += 5;
-        scoreText.text = `SCORE : ${score}`;
     })
 
     megaman.onStateEnter("shootState", () => {
+        const buster = k.add([
+            k.sprite("buster", {anim: "shoot"}),
+            k.pos(megaman.pos.x + 30, megaman.pos.y - 155),
+            k.scale(scale),
+        ])
         megaman.play("shoot", {
             onEnd: () => megaman.enterState("idleState"),
         })
-
+        k.wait(0.1, () => {
+            k.destroy(buster);
+        })
         const bullet = k.add([
             k.pos(megaman.pos.x + 80, megaman.pos.y - 60),
             k.move(360, 3000),
@@ -66,35 +61,43 @@ export default async function makePlayer(k, health, posX, posY, spawnpoints) {
             k.rect(0, 0),
             k.area({ shape: new k.Rect(k.vec2(0, 0), 30, 15) }),
             k.offscreen({ destroy: true }),
-            "bullet",
+            "attack",
         ])
         
         bullet.onCollide("enemy", (enemy) => {
             enemy.hurt(50);
-            console.log(enemy);
+            k.destroy(bullet);
         })
     })
 
     megaman.onStateEnter("slashState", () => {
+        const sword = k.add([
+            k.sprite("sword", {anim: "slash"}),
+            k.pos(megaman.pos.x - 100, megaman.pos.y - 240),
+            k.scale(scale),
+        ])
         megaman.play("slash", {
             onEnd: () => megaman.enterState("idleState"),
         })
+        k.wait(0.1, () => {
+            k.destroy(sword);
+        })
 
-        const sword = k.add([
+        const slash = k.add([
             k.pos(megaman.pos.x + 80, megaman.pos.y - 170),
             k.move(360, 0),
             k.scale(scale),
             k.rect(0,0),
             k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 75) }),
-            "sword",
+            "attack",
         ])
         
-        sword.onCollide("enemy", (enemy) => {
+        slash.onCollide("enemy", (enemy) => {
             enemy.hurt(100);
         })
         
         k.wait(0.1, () => {
-            k.destroy(sword);
+            k.destroy(slash);
        })
     })
 

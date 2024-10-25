@@ -1,6 +1,6 @@
 
 
-export default function setControls( k, spawnpoints, player) {
+export default function setControls( k, spawnPoints, player) {
     let grid = {
         x: 2,
         y: 2,
@@ -14,8 +14,8 @@ export default function setControls( k, spawnpoints, player) {
                     player.enterState("moveState");
                     grid.x -= 1;
                     player.moveTo(
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].x, 
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].y
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].x, 
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].y
                     );
                     break;
                 }
@@ -25,8 +25,8 @@ export default function setControls( k, spawnpoints, player) {
                     player.enterState("moveState");
                     grid.x += 1;
                     player.moveTo(
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].x, 
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].y
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].x, 
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].y
                     );
                     break;
                 }
@@ -36,8 +36,8 @@ export default function setControls( k, spawnpoints, player) {
                     player.enterState("moveState");
                     grid.y -= 1
                     player.moveTo(
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].x, 
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].y
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].x, 
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].y
                     );
                     break;
                 };
@@ -47,8 +47,8 @@ export default function setControls( k, spawnpoints, player) {
                     player.enterState("moveState");
                     grid.y += 1;
                     player.moveTo(
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].x, 
-                        spawnpoints[`${grid.x}x-${grid.y}y`][0].y
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].x, 
+                        spawnPoints[`${grid.x}x-${grid.y}y`][0].y
                     );
                     break;
                 };

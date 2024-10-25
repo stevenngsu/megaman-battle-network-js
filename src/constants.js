@@ -1,5 +1,5 @@
 export const scale = 4;
 
-export const tileWidth = 40;
+export const screenWidth = 256 * scale;
 
-export const tileHeight = 24;
+export const screenHeight = 180 * scale;
