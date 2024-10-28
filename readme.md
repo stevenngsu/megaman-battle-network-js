@@ -1,7 +1,7 @@
 # Megaman.EXE Infinite Gunner Game
 ---
 
-### Live demo: [Megaman.EXE-Endless-Armadillos] (https://stevenngsu.itch.io/megamanexe-endless-armadillos)
+### Live demo: [Megaman.EXE-Endless-Armadillos](https://stevenngsu.itch.io/megamanexe-endless-armadillos)
 
 ### Made with Javascript using the Kaplay library
 
