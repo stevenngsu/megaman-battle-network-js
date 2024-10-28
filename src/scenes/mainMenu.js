@@ -10,10 +10,12 @@ export default function mainMenu() {
 
     gameContent();
 
+    const playerHealth = 100;
+
     const platform = makePlatform(k).then(platformData => {
         const megaman = makePlayer(
             k,
-            1000,
+            playerHealth,
             platformData.spawnPoints["2x-2y"][0].x / scale,
             platformData.spawnPoints["2x-2y"][0].y / scale,
             platformData.spawnPoints,
@@ -23,7 +25,7 @@ export default function mainMenu() {
     k.add([
         k.text("Megaman.EXE Endless Armadillos", { font: "font", size: 48}),
         k.anchor("center"),
-        k.pos(k.center().x, 100),
+        k.pos(k.center().x, 125),
     ])
     k.add([
         k.text("Press Space to Play", { font: "font", size: 36}),

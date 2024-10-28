@@ -37,6 +37,12 @@ k.loadSprite("sword", "sprites/player/arms/sword.png", {
 		slash: { from: 0, to: 5, speed: 30 },
 	}
 });
+k.loadSprite("slashHitBox", "sprites/player/vfx/slashes.png", {
+	sliceX: 3,
+	anims: {
+		slashHitBox: { from: 0, to: 2, speed: 30 },
+	}
+})
 
 k.loadSprite("armadillo", "sprites/enemies/armadillo.png", {
 	sliceX: 5,

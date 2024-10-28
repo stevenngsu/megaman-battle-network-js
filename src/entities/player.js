@@ -10,8 +10,33 @@ export default function makePlayer(k, health, posX, posY, spawnpoints) {
         k.pos(posX * scale, posY * scale),
         k.health(health),
         k.state("idleState", ["idleState", "hurtState", "moveState", "shootState", "slashState"]),
+        {
+            hpUI: health,
+        },
         "megaman",
     ])
+
+    const playerHealthUI = k.add([
+        k.rect(150, 50),
+        k.pos(10, 10),
+        k.color(58, 80, 100),
+        k.outline(4,  k.Color.fromArray([255, 255, 255])),
+    ])
+
+    megaman.hpUI = k.add([
+        k.text(megaman.hp(), { font: "font", size: 56 }),
+        k.pos(142, 11),
+        k.anchor("topright"),
+    ])
+
+    megaman.onHurt(() => {
+        k.destroy(megaman.hpUI),
+        megaman.hpUI = k.add([
+            k.text(megaman.hp(), { font: "font", size: 56 }),
+            k.pos(142, 11),
+            k.anchor("topright"),
+        ])
+    })
 
     // state transitions
     megaman.onStateEnter("idleState", () => {
@@ -70,24 +95,12 @@ export default function makePlayer(k, health, posX, posY, spawnpoints) {
         })
     })
 
-    megaman.onStateEnter("slashState", () => {
-        const sword = k.add([
-            k.sprite("sword", {anim: "slash"}),
-            k.pos(megaman.pos.x - 100, megaman.pos.y - 240),
-            k.scale(scale),
-        ])
-        megaman.play("slash", {
-            onEnd: () => megaman.enterState("idleState"),
-        })
-        k.wait(0.1, () => {
-            k.destroy(sword);
-        })
-
+    megaman.onStateEnter("slashState", () => { 
         const slash = k.add([
+            k.sprite("slashHitBox", {anim: "slashHitBox"}),
             k.pos(megaman.pos.x + 80, megaman.pos.y - 170),
             k.move(360, 0),
             k.scale(scale),
-            k.rect(0,0),
             k.area({ shape: new k.Rect(k.vec2(0, 0), 40, 75) }),
             "attack",
         ])
@@ -99,6 +112,18 @@ export default function makePlayer(k, health, posX, posY, spawnpoints) {
         k.wait(0.1, () => {
             k.destroy(slash);
        })
+
+        const sword = k.add([
+            k.sprite("sword", {anim: "slash"}),
+            k.pos(megaman.pos.x - 100, megaman.pos.y - 240),
+            k.scale(scale),
+        ])
+        megaman.play("slash", {
+            onEnd: () => megaman.enterState("idleState"),
+        })
+        k.wait(0.1, () => {
+            k.destroy(sword);
+        })
     })
 
     setControls(k, spawnpoints, megaman)

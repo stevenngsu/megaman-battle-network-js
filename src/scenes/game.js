@@ -82,7 +82,7 @@ export default function game() {
             k.wait(waitTime, spawnOrderPoint);
         }
         spawnOrderPoint();
-        
+            
         const spawnMegaman = () => {
             const megaman = makePlayer(
                 k,
@@ -91,7 +91,11 @@ export default function game() {
                 platformData.spawnPoints["2x-2y"][0].y / scale,
                 platformData.spawnPoints,
             )
-            
+
+            megaman.onHurt(() => {
+                k.destroy
+            })
+
             megaman.onDeath(() => {
                 k.setData("currentScore", score);
             });
