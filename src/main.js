@@ -60,6 +60,15 @@ k.loadSprite("orderPoint", "sprites/battleUI/orderPoints.png", {
 	}
 });
 
+k.loadSound("deleted", "/sounds/Deleted HQ.ogg");
+k.loadSound("hurt", "/sounds/Hurt HQ.ogg");
+k.loadSound("collect", "/sounds/GotItem HQ.ogg");
+
+k.loadSound("buster", "/sounds/Buster.wav");
+k.loadSound("swordSwing", "/sounds/SwordSwing HQ.ogg");
+
+k.volume(0.05);
+
 k.scene("main-menu", mainMenu);
 k.scene("game", game);
 k.scene("gameover", gameOver);

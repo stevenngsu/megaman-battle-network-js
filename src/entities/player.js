@@ -58,16 +58,18 @@ export default function makePlayer(k, health, posX, posY, spawnpoints) {
     })
     
     megaman.onCollide("enemy", (enemy) => {
+        k.play("hurt");
         megaman.enterState("hurtState");
         megaman.hurt(20);
     })
 
     megaman.onCollide("orderPoint", (point) => {
-        // k.play("collect");
+        k.play("collect");
         k.destroy(point);
     })
 
     megaman.onStateEnter("shootState", () => {
+        k.play("buster");
         const buster = k.add([
             k.sprite("buster", {anim: "shoot"}),
             k.pos(megaman.pos.x + 30, megaman.pos.y - 155),
@@ -96,6 +98,7 @@ export default function makePlayer(k, health, posX, posY, spawnpoints) {
     })
 
     megaman.onStateEnter("slashState", () => { 
+        k.play("swordSwing");
         const slash = k.add([
             k.sprite("slashHitBox", {anim: "slashHitBox"}),
             k.pos(megaman.pos.x + 80, megaman.pos.y - 170),

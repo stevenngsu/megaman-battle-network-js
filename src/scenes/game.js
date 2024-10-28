@@ -92,11 +92,8 @@ export default function game() {
                 platformData.spawnPoints,
             )
 
-            megaman.onHurt(() => {
-                k.destroy
-            })
-
             megaman.onDeath(() => {
+                k.play("deleted");
                 k.setData("currentScore", score);
             });
         }
